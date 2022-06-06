@@ -1,0 +1,53 @@
+<div class="chat-area" ref={chatAreaRef}>
+    <ng-container *ngFor="let msg of chatMessages; index as i">
+        <div class="chat-msg " [ngClass]="{ 'show': msg.buttons == block, 'sent-by-me': msg.sentByMe == true}">
+
+            <!-- Sender Image render -->
+            <span *ngIf="msg.sender && msg.sender.img && !msg.buttons && msg.type != values.MSG_TYPES.PLAIN_INPUT"
+                class="msg-sender">
+                <img src={{msg.sender.img}} />
+            </span>
+
+            <!-- Text message render -->
+            <div class="chat-txt" [ngClass]="{ 'fb-response': msg.isFeedbackResponse == true}">
+                {{msg.text}}
+            </div>
+
+            <!-- Buttons message render -->
+            <ng-container *ngIf="msg.buttons">
+                <ng-container *ngIf="msg.buttons.fields.length">
+                    <ng-container *ngFor="let btnName of msg.buttons.fields; index as bkey">
+                        <div class="btn-name" (click)="sendServerMsg(btnName)">
+                            {{btnName}}
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+
+            <!-- Feedback question render -->
+            <ng-container *ngIf="msg.type && msg.type == values.MSG_TYPES.FEEDBACK">
+                <div class="feedback-msg chat-txt">
+                    <div class="">
+                        {{msg.feedback.message}}
+                    </div>
+                    <div class="feedback-wrapper">
+                        <ng-container *ngFor="let fd of values.FEEDBACK_EMOJIS; index as feedBackVal">
+                            <span class="emoji-wrapper" (click)="sendServerMsg(feedBackVal + 1)">
+                                <img id="insent-rating-card-rating-icon" [src]="getImages(fd.imgFileName)"
+                                    alt={fd.altName} />
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+    </ng-container>
+</div>
+
+
+<!-- Chat input text area render -->
+<div *ngIf="lastChatMsg && lastChatMsg.type == values.MSG_TYPES.PLAIN_INPUT" class="chat-input-wrapper">
+    <textarea ref={textInputRef} name="message" placeholder="Type your reply" rows="1" id="textInputArea"
+        (keydown)="searchCarKeyboard($event, licensePlate)" onKeyDown="submitTextarea($event)"></textarea>
+</div>
