@@ -70,7 +70,7 @@
         <!-- Chat input text area render -->
         <div *ngIf="lastChatMsg && showInput" class="chat-input-wrapper">
           <textarea ref={textInputRef} name="message" placeholder="Type your reply" rows="1" id="textInputArea"
-            (keydown)="submitTextarea($event)"></textarea>
+            (keydown)="submitTextarea($event)" (keyup)="submitTextarea($event)"></textarea>
         </div>
       </div>
 

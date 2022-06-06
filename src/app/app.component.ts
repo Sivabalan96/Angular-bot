@@ -114,12 +114,12 @@ export class AppComponent {
 
     const channel = pusher.subscribe(channelId);
     channel.bind("server-message", (data) => {
-      console.log("[server-message] :: ", data)
+      console.log("[server-message] :: ", data);
       this.addMessages(data.messages, data.messageTimestamp, data.sender)  // Add to chat
     });
 
     channel.bind('client-widget-message', (data) => {
-      console.log("[client-widget-message] :: ", data)
+      console.log("[client-widget-message] :: ", data);
     });
 
     channel.bind('pusher:subscription_succeeded', (data) => {
