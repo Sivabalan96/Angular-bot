@@ -22,6 +22,7 @@ export class AppComponent {
   lastChatMsg: any;
   showInput = false;
   message = '';
+  interval: any;
 
   constructor(
     private router: Router,
@@ -229,7 +230,18 @@ export class AppComponent {
 
   // Input text area change handler
   handleChatAreaChange(e) {
-    this.sendServerMsg(e.target.value);
+    this.interval = setInterval(() => {
+      this.sendServerMsg(e.target.value);
+      this.clear();
+    }, 500);
+  }
+
+  clear() {
+    let data = this.chatMessages.filter(res => res.text == this.message);
+    if (data.length > 0) {
+      this.message = '';
+      clearInterval(this.interval);
+    }
   }
 
   // Enter key check for text input
@@ -237,10 +249,6 @@ export class AppComponent {
     if (e.keyCode == 13) {
       e.preventDefault();
       this.handleChatAreaChange(e);
-    }
-    let data = this.chatMessages.filter(res => res.text == this.message);
-    if (data.length > 0) {
-      this.message = '';
     }
   }
 
