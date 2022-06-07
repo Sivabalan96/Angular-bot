@@ -28,8 +28,8 @@
 
               <!-- Text message render -->
               <ng-container *ngIf="msg.text">
-                <div class="chat-txt" [ngClass]="{ 'fb-response': msg.isFeedbackResponse == true}">
-                  {{msg.text}}
+                <div class="chat-txt" [ngClass]="{ 'fb-response': msg.isFeedbackResponse == true}"
+                  [innerHtml]="msg.text">
                 </div>
               </ng-container>
 
@@ -37,8 +37,7 @@
               <ng-container *ngIf="msg.buttons">
                 <ng-container *ngIf="msg.buttons.fields.length">
                   <ng-container *ngFor="let btnName of msg.buttons.fields; index as bkey">
-                    <div class="btn-name" (click)="sendServerMsg(btnName)">
-                      {{btnName}}
+                    <div class="btn-name" (click)="sendServerMsg(btnName)" [innerHtml]="btnName">
                     </div>
                   </ng-container>
                 </ng-container>
@@ -47,8 +46,7 @@
               <!-- Feedback question render -->
               <ng-container *ngIf="msg.type && msg.type == values.MSG_TYPES.FEEDBACK">
                 <div class="feedback-msg chat-txt">
-                  <div class="">
-                    {{msg.feedback.message}}
+                  <div class="" [innerHtml]="msg.feedback.message">
                   </div>
                   <div class="feedback-wrapper">
                     <ng-container *ngFor="let fd of values.FEEDBACK_EMOJIS; index as feedBackVal">
@@ -75,8 +73,8 @@
   </div>
 
   <div class="bot-widget-wrapper" (click)="toggleWidgetOpenState()">
-    <div *ngIf="!isWidgetOpen && initConvoInfo?.popupMessage?.message" class="convo-part">
-      {{initConvoInfo?.popupMessage?.message}}
+    <div *ngIf="!isWidgetOpen && initConvoInfo?.popupMessage?.message" class="convo-part"
+      [innerHtml]="initConvoInfo?.popupMessage?.message">
     </div>
 
     <span class="bot-icon">
