@@ -23,6 +23,7 @@ export class AppComponent {
   showInput = false;
   message = '';
   interval: any;
+  fieldValue = '';
 
   constructor(
     private router: Router,
@@ -144,6 +145,7 @@ export class AppComponent {
 
   // Send data to server (button click/text response/feedback response)
   sendServerMsg(fieldValue?) {
+    this.fieldValue = fieldValue;
     const channelName = this.initConvoInfo?.channelId
     const userId = this.initConvoInfo?.user.id
     const channelId = this.initConvoInfo?.subscriptionChannel
@@ -190,6 +192,11 @@ export class AppComponent {
     if (this.pusherObj) {
       this.pusherObj.channel(channelId).trigger('client-widget-message', clientData);
     }
+    setTimeout(() => {
+      if (this.fieldValue != '') {
+        this.sendServerMsg(this.fieldValue);
+      }
+    }, 2000);
   }
 
   // Replace the last message with new msg
@@ -240,6 +247,7 @@ export class AppComponent {
     let data = this.chatMessages.filter(res => res.text == this.message);
     if (data.length > 0) {
       this.message = '';
+      this.showInput = false;
       clearInterval(this.interval);
     }
   }
