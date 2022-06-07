@@ -13,9 +13,6 @@
       <span class="bot-name">Insent Bot</span>
     </div>
     <ng-container *ngIf="chatMessages.length > 0">
-      <!-- <chat-box [chatMessages]="chatMessages" [textInputRef]="textInputRef" (submitText)="submitTextarea($event)"
-        (sendToServerText)="sendServerMsg($event)">
-      </chat-box> -->
 
       <!-- Chat box -->
       <div>
@@ -69,7 +66,7 @@
 
         <!-- Chat input text area render -->
         <div *ngIf="lastChatMsg && showInput" class="chat-input-wrapper">
-          <textarea ref={textInputRef} name="message" placeholder="Type your reply" rows="1" id="textInputArea"
+          <textarea [(ngModel)]="message" name="message" placeholder="Type your reply" rows="1" id="textInputArea"
             (keydown)="submitTextarea($event)" (keyup)="submitTextarea($event)"></textarea>
         </div>
       </div>

@@ -17,11 +17,11 @@ export class AppComponent {
   projectKey: any;
   chatMessages = [];
   pusherObj: any;
-  textInputRef: any;
   values: { USER_CREDENTIALS: { EMAIL: string; PASSWORD: string; }; DEFAULT_CONVO_ID: string; FEEDBACK_EMOJIS: { imgFileName: string; altName: string; }[]; MSG_TYPES: { TEXT: string; FEEDBACK: string; PLAIN_INPUT: string; }; FEEDBACK_VALUES: { 1: string; 2: string; 3: string; 4: string; 5: string; }; };
   chatAreaRef: any;
   lastChatMsg: any;
   showInput = false;
+  message = '';
 
   constructor(
     private router: Router,
@@ -234,9 +234,13 @@ export class AppComponent {
 
   // Enter key check for text input
   submitTextarea(e) {
-    if (e.key === "Enter") {
+    if (e.keyCode == 13) {
       e.preventDefault();
       this.handleChatAreaChange(e);
+    }
+    let data = this.chatMessages.filter(res => res.text == this.message);
+    if (data.length > 0) {
+      this.message = '';
     }
   }
 
