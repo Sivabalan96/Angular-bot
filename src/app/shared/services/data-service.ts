@@ -1,8 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 const API_DOMAIN = "https://insentrecruit.api.insent.ai";
-
 
 @Injectable({
     providedIn: 'root'
@@ -10,37 +8,18 @@ const API_DOMAIN = "https://insentrecruit.api.insent.ai";
 
 export class DataService {
 
-
     LOGIN_URL = '';
     GET_APP_DETAILS_URL = '';
     GET_CONVO_URL = '';
     GET_INIT_MESSAGE_URL = '';
 
     constructor(
-        private http: HttpClient,
+        private http: HttpClient
     ) {
         this.LOGIN_URL = API_DOMAIN + "/app/login";
         this.GET_APP_DETAILS_URL = API_DOMAIN + "/app/details";
         this.GET_CONVO_URL = API_DOMAIN + "/getuser";
         this.GET_INIT_MESSAGE_URL = API_DOMAIN + "/user/channels/{channel_id}";
-
-        // axios.interceptors.request.use(
-        //   (config) => {
-        //     // Do something before request is sent
-        //     return config;
-        //   },
-        //   (error) => {
-        //     // Do something with request error
-        //     return Promise.reject(error);
-        //   }
-        // );
-
-        // axios.interceptors.response.use(
-        //   (res) => res,
-        //   (x) => {
-        //     throw x;
-        //   }
-        // );
     }
 
     getHeaders(token?, userId?) {
@@ -58,7 +37,6 @@ export class DataService {
         if (userId) {
             reqHeaders.headers["userid"] = userId;
         }
-
         return reqHeaders;
     }
 

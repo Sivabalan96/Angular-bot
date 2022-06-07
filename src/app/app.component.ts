@@ -195,6 +195,7 @@ export class AppComponent {
     setTimeout(() => {
       if (this.fieldValue != '') {
         this.sendServerMsg(this.fieldValue);
+        this.fieldValue = '';
       }
     }, 2000);
   }
