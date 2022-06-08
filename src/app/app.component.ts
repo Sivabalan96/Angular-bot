@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CONSTANTS } from './shared/helper/constants';
 import { DataService } from './shared/services/data-service';
 
@@ -27,7 +28,8 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private dataservice: DataService
+    private dataservice: DataService,
+    private spinner: NgxSpinnerService,
   ) {
 
   }
@@ -52,9 +54,9 @@ export class AppComponent {
     this.isWidgetOpen = !this.isWidgetOpen;
   }
 
-
   // Get initial convo details and app details to start with.
   async getInitConversationInfo() {
+    this.spinner.show();
     this.dataservice.getAppDetails().subscribe((appDetails: any) => {
       if (!appDetails || !appDetails || !appDetails.project || !appDetails.project.projectKey) {
         return;
@@ -74,6 +76,7 @@ export class AppComponent {
           if (!msgInfoResponse) {
             return;
           }
+          this.spinner.hide();
           this.initMsgInfo = msgInfoResponse;
           if (this.initConvoInfo && this.projectKey && this.initMsgInfo) {
             const pusher = this.initPusher();
